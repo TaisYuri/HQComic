@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment2">
+    <fragment
+        android:id="@+id/homeFragment2"
+        android:name="com.example.hqmarvel.presentation.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment2_to_agentListFragment"
+            app:destination="@id/agentListFragment" />
+        <action
+            android:id="@+id/action_homeFragment2_to_listHQFragment"
+            app:destination="@id/listHQFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/agentListFragment"
+        android:name="com.example.hqmarvel.presentation.listagent.AgentListFragment"
+        android:label="fragment_agent_list"
+        tools:layout="@layout/fragment_agent_list" >
+        <action
+            android:id="@+id/action_agentListFragment_to_detailAgentFragment"
+            app:destination="@id/detailAgentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listHQFragment"
+        android:name="com.example.hqmarvel.presentation.listhq.ListHQFragment"
+        android:label="fragment_h_q"
+        tools:layout="@layout/fragment_h_q" >
+        <action
+            android:id="@+id/action_listHQFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.hqmarvel.presentation.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" />
+    <fragment
+        android:id="@+id/detailAgentFragment"
+        android:name="com.example.hqmarvel.presentation.detailagent.DetailAgentFragment"
+        android:label="fragment_detail_agent"
+        tools:layout="@layout/fragment_detail_agent" />
+</navigation>
