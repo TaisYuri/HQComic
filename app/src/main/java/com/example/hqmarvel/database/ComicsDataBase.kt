@@ -38,8 +38,4 @@ abstract  class ComicsDataBase: RoomDatabase() {
             }
         }
     }
-
-
-
-
 }

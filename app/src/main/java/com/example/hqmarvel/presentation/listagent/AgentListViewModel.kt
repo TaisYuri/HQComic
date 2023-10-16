@@ -3,16 +3,16 @@ package com.example.hqmarvel.presentation.listagent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hqmarvel.RetrofitBuilder
 import com.example.hqmarvel.data.model.response.AgentData
-import com.example.hqmarvel.data.ApiCredentials
 import com.example.hqmarvel.data.DataState
-import com.example.hqmarvel.helper.ApiHelper
+import com.example.hqmarvel.repository.AgentRepository
 import kotlinx.coroutines.launch
 
 class AgentListViewModel : ViewModel() {
     var listAgentLiveData = MutableLiveData<List<AgentData>?>()
     var appState = MutableLiveData<DataState>()
+
+    private val agentRepository = AgentRepository()
 
     init {
         appState.postValue(DataState.Loading)
@@ -20,22 +20,20 @@ class AgentListViewModel : ViewModel() {
     }
 
     private fun getListAgent() {
-        val timestamp = ApiHelper.getCurrentTimeStamp()
-        val input = "$timestamp${ApiCredentials.privateKey}${ApiCredentials.publickKey}"
-        val hash = ApiHelper.generateMD5Hash(input)
+        appState.postValue(DataState.Loading)
 
-        //CRIANDO COROUTINE
         viewModelScope.launch {
-           // val response = serviceAgent.getAgentList(timestamp, ApiCredentials.publickKey, hash, 50)
-            val response = RetrofitBuilder.apiService.getAgentList(timestamp, ApiCredentials.publickKey, hash, 50)
+            val agentListResult = agentRepository.getAgentData()
 
-
-            if (response.isSuccessful) {
-                listAgentLiveData.postValue(response.body()?.data?.results)
-                appState.postValue(DataState.Success)
-            } else {
-                appState.postValue(DataState.Error)
-            }
+            agentListResult.fold(
+                onSuccess = {
+                    listAgentLiveData.postValue(it)
+                    appState.postValue(DataState.Success)
+                },
+                onFailure = {
+                    appState.postValue(DataState.Error)
+                }
+            )
 
         }
     }
