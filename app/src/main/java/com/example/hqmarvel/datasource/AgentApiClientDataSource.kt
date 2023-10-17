@@ -1,6 +1,7 @@
 package com.example.hqmarvel.datasource
 
 import android.util.Log
+import com.example.hqmarvel.RetrofitClient
 import com.example.hqmarvel.data.ApiCredentials
 import com.example.hqmarvel.data.api.AgentService
 import com.example.hqmarvel.data.api.Service
@@ -13,12 +14,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class AgentApiClientDataSource : AgentDataSource {
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(ApiCredentials.baseUrl)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
-
-    private val service = retrofit.create(AgentService::class.java)
+    private val service = RetrofitClient.createService(AgentService::class.java)
     override suspend fun getAgentData(): Result<List<AgentData>?> =
         withContext(Dispatchers.IO) {
             val timestamp = ApiHelper.getCurrentTimeStamp()

@@ -1,24 +1,17 @@
 package com.example.hqmarvel.datasource
 
+import com.example.hqmarvel.RetrofitClient
 import com.example.hqmarvel.data.ApiCredentials
-import com.example.hqmarvel.data.api.AgentService
 import com.example.hqmarvel.data.api.Service
-import com.example.hqmarvel.data.model.response.AgentData
 import com.example.hqmarvel.data.model.response.ComicData
 import com.example.hqmarvel.helper.ApiHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+
 
 class HQApiClientDataSource: HQDataSource {
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(ApiCredentials.baseUrl)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
-
-    private val comicService = retrofit.create(Service::class.java)
+    private val comicService = RetrofitClient.createService(Service::class.java)
 
     private val timestamp = ApiHelper.getCurrentTimeStamp()
     private val input = "$timestamp${ApiCredentials.privateKey}${ApiCredentials.publickKey}"

@@ -15,6 +15,5 @@ class ListViewHolder(private val binding: ItemHqListBinding): RecyclerView.ViewH
         binding.content.text = item.getContent()
         binding.imageView.bindSrcUrl(item.getImageUrl() ?: "Sem imagem")
 
-
     }
 }
